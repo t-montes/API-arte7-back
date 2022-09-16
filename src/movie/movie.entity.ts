@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, JoinColumn, JoinTable } from 'typeorm';
 import BaseEntity from '../base/base.entity';
 import DirectorEntity from '../director/director.entity';
 import ActorEntity from '../actor/actor.entity';
@@ -31,6 +31,7 @@ export default class MovieEntity extends BaseEntity {
     director: DirectorEntity;
 
     @ManyToMany(type => ActorEntity, actor => actor.movies)
+    @JoinTable()
     actors: ActorEntity[];
 
     @ManyToOne(type => GenreEntity, genre => genre.movies)
