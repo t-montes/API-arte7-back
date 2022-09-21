@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ReviewService } from './review.service';
+import ReviewService from './review.service';
 import ReviewEntity from './review.entity';
 import MovieEntity from '../movie/movie.entity';
 

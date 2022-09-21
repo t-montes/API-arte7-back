@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { YoutubeTrailerService } from './youtube-trailer.service';
+import YoutubeTrailerService from './youtube-trailer.service';
 
 describe('YoutubeTrailerService', () => {
   let service: YoutubeTrailerService;

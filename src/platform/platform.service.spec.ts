@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PlatformService } from './platform.service';
+import PlatformService from './platform.service';
 
 describe('PlatformService', () => {
   let service: PlatformService;

@@ -6,7 +6,7 @@ import ReviewEntity from './review.entity';
 import MovieEntity from '../movie/movie.entity';
 
 @Injectable()
-export class ReviewService {
+export default class ReviewService {
     constructor(
         @InjectRepository(ReviewEntity)
         private readonly reviewRepository: Repository<ReviewEntity>,

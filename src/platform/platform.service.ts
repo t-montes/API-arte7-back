@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import PlatformEntity from './platform.entity';
 
 @Injectable()
-export class PlatformService {
+export default class PlatformService {
     constructor(
         @InjectRepository(PlatformEntity)
         private readonly platformRepository: Repository<PlatformEntity>,

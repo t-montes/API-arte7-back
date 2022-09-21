@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import YoutubeTrailerEntity from './youtube-trailer.entity';
 
 @Injectable()
-export class YoutubeTrailerService {
+export default class YoutubeTrailerService {
     constructor(
         @InjectRepository(YoutubeTrailerEntity)
         private readonly youtubeTrailerRepository: Repository<YoutubeTrailerEntity>,

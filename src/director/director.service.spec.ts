@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import DirectorEntity from './director.entity';
-import { DirectorService } from './director.service';
+import DirectorService from './director.service';
 import { faker } from '@faker-js/faker';
 
 describe('DirectorService', () => {
@@ -59,7 +59,7 @@ describe('DirectorService', () => {
   });
 
   it('findOne should throw an exception for an invalid director', async () => {
-    await expect(() => service.findOne("0")).rejects.toHaveProperty("message", "The director with the given id was not found")
+    await expect(() => service.findOne("0")).rejects.toHaveProperty("message", "The director with the given id was not found");
   });
 
   
@@ -72,12 +72,12 @@ describe('DirectorService', () => {
       birthDate: faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z'),
       biography: faker.lorem.sentence(),
       movies: []
-    }
+    };
   
     const newDirector: DirectorEntity = await service.create(director);
     expect(newDirector).not.toBeNull();
   
-    const storedDirector: DirectorEntity = await repository.findOne({where: {id: newDirector.id}})
+    const storedDirector: DirectorEntity = await repository.findOne({where: {id: newDirector.id}});
     expect(storedDirector).not.toBeNull();
     expect(storedDirector.name).toEqual(newDirector.name);
     expect(storedDirector.photo).toEqual(newDirector.photo);
@@ -97,7 +97,7 @@ describe('DirectorService', () => {
     
     const updatedDirector: DirectorEntity = await service.update(director.id, director);
     expect(updatedDirector).not.toBeNull();
-    const storedDirector: DirectorEntity = await repository.findOne({ where: { id: director.id } })
+    const storedDirector: DirectorEntity = await repository.findOne({ where: { id: director.id } });
     expect(storedDirector).not.toBeNull();
     expect(storedDirector.name).toEqual(director.name);
     expect(storedDirector.photo).toEqual(director.photo);
@@ -115,21 +115,21 @@ describe('DirectorService', () => {
       nationality: faker.address.country(),
       birthDate: faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z'),
       biography: faker.lorem.sentence()
-    }
-    await expect(() => service.update("0", director)).rejects.toHaveProperty("message", "The director with the given id was not found")
+    };
+    await expect(() => service.update("0", director)).rejects.toHaveProperty("message", "The director with the given id was not found");
   });
  
   it('delete should remove a director', async () => {
     const director: DirectorEntity = directorsList[0];
     await service.delete(director.id);
-     const deletedDirector: DirectorEntity = await repository.findOne({ where: { id: director.id } })
+    const deletedDirector: DirectorEntity = await repository.findOne({ where: { id: director.id } });
     expect(deletedDirector).toBeNull();
   });
  
   it('delete should throw an exception for an invalid director', async () => {
     const director: DirectorEntity = directorsList[0];
     await service.delete(director.id);
-    await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The director with the given id was not found")
+    await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The director with the given id was not found");
   });
 
 });

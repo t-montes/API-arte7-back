@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import DirectorEntity from './director.entity';
 
 @Injectable()
-export class DirectorService {
+export default class DirectorService {
     constructor(
         @InjectRepository(DirectorEntity)
         private readonly directorRepository: Repository<DirectorEntity>,

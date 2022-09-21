@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { YoutubeTrailerService } from './youtube-trailer.service';
+import YoutubeTrailerService from './youtube-trailer.service';
 import YoutubeTrailerEntity from './youtube-trailer.entity';
 
 @Module({
