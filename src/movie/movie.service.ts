@@ -30,7 +30,7 @@ export class MovieService {
         const movieToUpdate:MovieEntity = await this.movieRepository.findOne({ where: {id} });
         if (!movieToUpdate) 
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.movieRepository.save(movie);
+        return await this.movieRepository.save({movieToUpdate, ...movie});
     }
     
     async delete(id: string): Promise<void> {

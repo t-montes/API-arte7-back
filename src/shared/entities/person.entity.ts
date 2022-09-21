@@ -1,7 +1,6 @@
 import { Column, Entity } from 'typeorm';
-import BaseEntity from '../base/base.entity';
+import BaseEntity from './base.entity';
 
-@Entity()
 export default class PersonEntity extends BaseEntity {
     @Column()
     name: string;

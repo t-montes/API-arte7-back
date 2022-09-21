@@ -30,7 +30,7 @@ export class DirectorService {
         const directorToUpdate:DirectorEntity = await this.directorRepository.findOne({ where: {id} });
         if (!directorToUpdate) 
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.directorRepository.save(director);
+        return await this.directorRepository.save({...directorToUpdate, ...director});
     }
     
     async delete(id: string): Promise<void> {

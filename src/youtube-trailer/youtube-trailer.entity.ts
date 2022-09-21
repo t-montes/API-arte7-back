@@ -1,5 +1,5 @@
 import { Column, Entity, OneToOne } from 'typeorm';
-import BaseEntity from '../base/base.entity';
+import BaseEntity from '../shared/entities/base.entity';
 import MovieEntity  from '../movie/movie.entity';
 
 @Entity()

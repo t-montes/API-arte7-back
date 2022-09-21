@@ -30,7 +30,7 @@ export class ActorService {
         const actorToUpdate:ActorEntity = await this.actorRepository.findOne({ where: {id} });
         if (!actorToUpdate) 
             throw new BusinessLogicException("The actor with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.actorRepository.save(actor);
+        return await this.actorRepository.save({...actorToUpdate, ...actor});
     }
     
     async delete(id: string): Promise<void> {

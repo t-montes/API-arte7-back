@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, JoinColumn, JoinTable } from 'typeorm';
-import BaseEntity from '../base/base.entity';
+import BaseEntity from '../shared/entities/base.entity';
 import DirectorEntity from '../director/director.entity';
 import ActorEntity from '../actor/actor.entity';
 import GenreEntity from '../genre/genre.entity';

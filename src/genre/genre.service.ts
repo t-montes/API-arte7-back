@@ -30,7 +30,7 @@ export class GenreService {
         const genreToUpdate:GenreEntity = await this.genreRepository.findOne({ where: {id} });
         if (!genreToUpdate) 
             throw new BusinessLogicException("The genre with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.genreRepository.save(genre);
+        return await this.genreRepository.save({genreToUpdate, ...genre});
     }
     
     async delete(id: string): Promise<void> {

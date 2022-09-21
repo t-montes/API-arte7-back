@@ -21,13 +21,16 @@ export class ReviewService {
         return movie.reviews;
     }
 
-    async findOne(movieId: string, id: string): Promise<ReviewEntity> {
+    async findOne(movieId: string, reviewId: string): Promise<ReviewEntity> {
         const movie:MovieEntity = await this.movieRepository.findOne({ where: {id: movieId}, relations: ['reviews'] });
         if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        const review:ReviewEntity = movie.reviews.find(r => r.id === id);
-        if (!review)
+        const persistedReview: ReviewEntity = await this.reviewRepository.findOne({ where: {id: reviewId}, relations: ['movie'] });
+        if (!persistedReview)
             throw new BusinessLogicException("The review with the given id was not found", BusinessError.NOT_FOUND);
+        const review:ReviewEntity = movie.reviews.find(r => r.id === reviewId);
+        if (!review)
+            throw new BusinessLogicException("The review with the given id is not associated to the movie", BusinessError.NOT_FOUND);
         return review;
     }
 
@@ -35,27 +38,34 @@ export class ReviewService {
         const movie:MovieEntity = await this.movieRepository.findOne({ where: {id: movieId}, relations: ['reviews'] });
         if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        review.movie = movie;
-        return await this.reviewRepository.save(review);
+        movie.reviews = [...movie.reviews, review];
+        const persistedMovie:MovieEntity = await this.movieRepository.save(movie);
+        return [ ...persistedMovie.reviews ].pop();
     }
 
-    async update(movieId: string, id: string, review: ReviewEntity): Promise<ReviewEntity> {
+    async update(movieId: string, reviewId: string, review: ReviewEntity): Promise<ReviewEntity> {
         const movie:MovieEntity = await this.movieRepository.findOne({ where: {id: movieId}, relations: ['reviews'] });
         if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        const reviewToUpdate:ReviewEntity = movie.reviews.find(r => r.id === id);
+        const persistedReview: ReviewEntity = await this.reviewRepository.findOne({ where: {id: reviewId}, relations: ['movie'] });
+        if (!persistedReview)
+            throw new BusinessLogicException("The review with the given id was not found", BusinessError.NOT_FOUND);
+        const reviewToUpdate:ReviewEntity = movie.reviews.find(r => r.id === reviewId);
         if (!reviewToUpdate)
-            throw new BusinessLogicException("The review with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.reviewRepository.save(review);
+            throw new BusinessLogicException("The review with the given id is not associated to the movie", BusinessError.NOT_FOUND);
+        return await this.reviewRepository.save({reviewToUpdate, ...review});
     }
 
-    async delete(movieId: string, id: string): Promise<void> {
+    async delete(movieId: string, reviewId: string): Promise<void> {
         const movie:MovieEntity = await this.movieRepository.findOne({ where: {id: movieId}, relations: ['reviews'] });
         if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        const reviewToDelete:ReviewEntity = movie.reviews.find(r => r.id === id);
-        if (!reviewToDelete)
+        const persistedReview: ReviewEntity = await this.reviewRepository.findOne({ where: {id: reviewId}, relations: ['movie'] });
+        if (!persistedReview)
             throw new BusinessLogicException("The review with the given id was not found", BusinessError.NOT_FOUND);
+        const reviewToDelete:ReviewEntity = movie.reviews.find(r => r.id === reviewId);
+        if (!reviewToDelete)
+            throw new BusinessLogicException("The review with the given id is not associated to the movie", BusinessError.NOT_FOUND);
         await this.reviewRepository.remove(reviewToDelete);
     }
 }

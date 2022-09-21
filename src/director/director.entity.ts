@@ -1,5 +1,5 @@
 import { Entity, OneToMany } from 'typeorm';
-import PersonEntity from '../person/person.entity';
+import PersonEntity from '../shared/entities/person.entity';
 import MovieEntity from '../movie/movie.entity';
 
 @Entity()

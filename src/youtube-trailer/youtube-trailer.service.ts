@@ -30,7 +30,7 @@ export class YoutubeTrailerService {
         const youtubeTrailerToUpdate:YoutubeTrailerEntity = await this.youtubeTrailerRepository.findOne({ where: {id} });
         if (!youtubeTrailerToUpdate) 
             throw new BusinessLogicException("The youtubeTrailer with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.youtubeTrailerRepository.save(youtubeTrailer);
+        return await this.youtubeTrailerRepository.save({youtubeTrailerToUpdate, ...youtubeTrailer});
     }
     
     async delete(id: string): Promise<void> {

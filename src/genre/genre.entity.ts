@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import MovieEntity from '../movie/movie.entity';
-import BaseEntity from '../base/base.entity';
+import BaseEntity from '../shared/entities/base.entity';
 
 @Entity()
 export default class GenreEntity extends BaseEntity {
