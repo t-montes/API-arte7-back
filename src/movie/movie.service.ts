@@ -12,11 +12,11 @@ export default class MovieService {
     ){}
 
     async findAll(): Promise<MovieEntity[]> {
-        return await this.movieRepository.find({ relations: ['genres', 'directors', 'youtubeTrailers'] });
+        return await this.movieRepository.find({ relations: ['director', 'actors', 'genre', 'platforms', 'reviews', 'youtubeTrailer'] });
     }
 
     async findOne(id: string): Promise<MovieEntity> {
-        const movie:MovieEntity = await this.movieRepository.findOne({ where: {id}, relations: ['genres', 'directors', 'youtubeTrailers'] });
+        const movie:MovieEntity = await this.movieRepository.findOne({ where: {id}, relations: ['director', 'actors', 'genre', 'platforms', 'reviews', 'youtubeTrailer'] });
         if (!movie) 
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
         return movie;

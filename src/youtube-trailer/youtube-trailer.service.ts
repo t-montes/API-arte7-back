@@ -18,7 +18,7 @@ export default class YoutubeTrailerService {
     async findOne(id: string): Promise<YoutubeTrailerEntity> {
         const youtubeTrailer:YoutubeTrailerEntity = await this.youtubeTrailerRepository.findOne({ where: {id}, relations: ['movie'] });
         if (!youtubeTrailer) 
-            throw new BusinessLogicException("The youtubeTrailer with the given id was not found", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("The youtube trailer with the given id was not found", BusinessError.NOT_FOUND);
         return youtubeTrailer;
     }
 
@@ -29,14 +29,14 @@ export default class YoutubeTrailerService {
     async update(id: string, youtubeTrailer: YoutubeTrailerEntity): Promise<YoutubeTrailerEntity> {
         const youtubeTrailerToUpdate:YoutubeTrailerEntity = await this.youtubeTrailerRepository.findOne({ where: {id} });
         if (!youtubeTrailerToUpdate) 
-            throw new BusinessLogicException("The youtubeTrailer with the given id was not found", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("The youtube trailer with the given id was not found", BusinessError.NOT_FOUND);
         return await this.youtubeTrailerRepository.save({youtubeTrailerToUpdate, ...youtubeTrailer});
     }
     
     async delete(id: string): Promise<void> {
         const youtubeTrailerToDelete:YoutubeTrailerEntity = await this.youtubeTrailerRepository.findOne({ where: {id} });
         if (!youtubeTrailerToDelete) 
-            throw new BusinessLogicException("The youtubeTrailer with the given id was not found", BusinessError.NOT_FOUND);
+            throw new BusinessLogicException("The youtube trailer with the given id was not found", BusinessError.NOT_FOUND);
         await this.youtubeTrailerRepository.remove(youtubeTrailerToDelete);
     }
 }

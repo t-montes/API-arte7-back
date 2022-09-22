@@ -12,11 +12,11 @@ export default class PlatformService {
     ){}
 
     async findAll(): Promise<PlatformEntity[]> {
-        return await this.platformRepository.find({ relations: ['games'] });
+        return await this.platformRepository.find({ relations: ['movies'] });
     }
 
     async findOne(id: string): Promise<PlatformEntity> {
-        const platform:PlatformEntity = await this.platformRepository.findOne({ where: {id}, relations: ['games'] });
+        const platform:PlatformEntity = await this.platformRepository.findOne({ where: {id}, relations: ['movies'] });
         if (!platform) 
             throw new BusinessLogicException("The platform with the given id was not found", BusinessError.NOT_FOUND);
         return platform;

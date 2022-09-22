@@ -48,7 +48,7 @@ describe('ActorService', () => {
   });
  
   it('findOne should return a actor by id', async () => {
-     const storedActor: ActorEntity = actorsList[0];
+    const storedActor: ActorEntity = actorsList[0];
     const actor: ActorEntity = await service.findOne(storedActor.id);
     expect(actor).not.toBeNull();
     expect(actor.name).toEqual(storedActor.name);
