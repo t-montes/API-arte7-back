@@ -7,4 +7,4 @@ import DirectorEntity from './director.entity';
   imports: [TypeOrmModule.forFeature([DirectorEntity])],
   providers: [DirectorService]
 })
-export class DirectorModule {}
+export class DirectorModule { }

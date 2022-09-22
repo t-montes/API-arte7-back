@@ -7,4 +7,4 @@ import MovieEntity from './movie.entity';
   imports: [TypeOrmModule.forFeature([MovieEntity])],
   providers: [MovieService]
 })
-export class MovieModule {}
+export class MovieModule { }

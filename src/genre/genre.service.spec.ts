@@ -25,11 +25,11 @@ describe('GenreService', () => {
   const seedDatabase = async () => {
     repository.clear();
     genresList = [];
-    for(let i = 0; i < 5; i++){
-        const genre: GenreEntity = await repository.save({
-          type: faker.name.firstName()
-        });
-        genresList.push(genre);
+    for (let i = 0; i < 5; i++) {
+      const genre: GenreEntity = await repository.save({
+        type: faker.name.firstName()
+      });
+      genresList.push(genre);
     }
   }
 
@@ -92,7 +92,7 @@ describe('GenreService', () => {
   it('delete should remove a genre', async () => {
     const genre: GenreEntity = genresList[0];
     await service.delete(genre.id);
-    const deletedGenre: GenreEntity = await repository.findOne({where: {id: genre.id } });
+    const deletedGenre: GenreEntity = await repository.findOne({ where: { id: genre.id } });
     expect(deletedGenre).toBeNull();
   });
 
@@ -101,5 +101,5 @@ describe('GenreService', () => {
     await service.delete(genre.id);
     await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The genre with the given id was not found");
   });
-  
+
 });

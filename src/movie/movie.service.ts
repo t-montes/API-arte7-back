@@ -9,15 +9,15 @@ export default class MovieService {
     constructor(
         @InjectRepository(MovieEntity)
         private readonly movieRepository: Repository<MovieEntity>,
-    ){}
+    ) { }
 
     async findAll(): Promise<MovieEntity[]> {
         return await this.movieRepository.find({ relations: ['director', 'actors', 'genre', 'platforms', 'reviews', 'youtubeTrailer'] });
     }
 
     async findOne(id: string): Promise<MovieEntity> {
-        const movie:MovieEntity = await this.movieRepository.findOne({ where: {id}, relations: ['director', 'actors', 'genre', 'platforms', 'reviews', 'youtubeTrailer'] });
-        if (!movie) 
+        const movie: MovieEntity = await this.movieRepository.findOne({ where: { id }, relations: ['director', 'actors', 'genre', 'platforms', 'reviews', 'youtubeTrailer'] });
+        if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
         return movie;
     }
@@ -27,15 +27,15 @@ export default class MovieService {
     }
 
     async update(id: string, movie: MovieEntity): Promise<MovieEntity> {
-        const movieToUpdate:MovieEntity = await this.movieRepository.findOne({ where: {id} });
-        if (!movieToUpdate) 
+        const movieToUpdate: MovieEntity = await this.movieRepository.findOne({ where: { id } });
+        if (!movieToUpdate)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.movieRepository.save({movieToUpdate, ...movie});
+        return await this.movieRepository.save({ movieToUpdate, ...movie });
     }
-    
+
     async delete(id: string): Promise<void> {
-        const movieToDelete:MovieEntity = await this.movieRepository.findOne({ where: {id} });
-        if (!movieToDelete) 
+        const movieToDelete: MovieEntity = await this.movieRepository.findOne({ where: { id } });
+        if (!movieToDelete)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
         await this.movieRepository.remove(movieToDelete);
     }

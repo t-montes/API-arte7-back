@@ -8,4 +8,4 @@ import MovieEntity from '../movie/movie.entity';
   imports: [TypeOrmModule.forFeature([ReviewEntity, MovieEntity])],
   providers: [ReviewService]
 })
-export class ReviewModule {}
+export class ReviewModule { }

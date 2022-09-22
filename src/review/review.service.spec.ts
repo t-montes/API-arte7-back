@@ -29,13 +29,13 @@ describe('ReviewService', () => {
   const seedDatabase = async () => {
     reviewRepository.clear();
     reviewsList = [];
-    for(let i = 0; i < 5; i++){
-        const review: ReviewEntity = await reviewRepository.save({
-          text: faker.lorem.sentence(),
-          score: faker.datatype.number({min: 0, max: 10}),
-          creator: faker.name.firstName(),
-        });
-        reviewsList.push(review);
+    for (let i = 0; i < 5; i++) {
+      const review: ReviewEntity = await reviewRepository.save({
+        text: faker.lorem.sentence(),
+        score: faker.datatype.number({ min: 0, max: 10 }),
+        creator: faker.name.firstName(),
+      });
+      reviewsList.push(review);
     }
 
     movie = await movieRepository.save({
@@ -84,7 +84,7 @@ describe('ReviewService', () => {
   it('findOne should throw an exception for a non associated review', async () => {
     const nonAssociatedReview = await reviewRepository.save({
       text: faker.lorem.sentence(),
-      score: faker.datatype.number({min: 0, max: 10}),
+      score: faker.datatype.number({ min: 0, max: 10 }),
       creator: faker.name.firstName(),
     });
 
@@ -95,7 +95,7 @@ describe('ReviewService', () => {
     const review: ReviewEntity = {
       id: "",
       text: faker.lorem.sentence(),
-      score: faker.datatype.number({min: 0, max: 10}),
+      score: faker.datatype.number({ min: 0, max: 10 }),
       creator: faker.name.firstName(),
       movie
     };
@@ -103,7 +103,7 @@ describe('ReviewService', () => {
     const newReview: ReviewEntity = await service.create(movie.id, review);
     expect(newReview).not.toBeNull();
 
-    const storedReview: ReviewEntity = await reviewRepository.findOne({ where: {id: newReview.id}});
+    const storedReview: ReviewEntity = await reviewRepository.findOne({ where: { id: newReview.id } });
     expect(storedReview).not.toBeNull();
     expect(storedReview.text).toEqual(review.text);
     expect(storedReview.score).toEqual(review.score);
@@ -114,7 +114,7 @@ describe('ReviewService', () => {
     const review: ReviewEntity = {
       id: "",
       text: faker.lorem.sentence(),
-      score: faker.datatype.number({min: 0, max: 10}),
+      score: faker.datatype.number({ min: 0, max: 10 }),
       creator: faker.name.firstName(),
       movie
     };
@@ -122,7 +122,7 @@ describe('ReviewService', () => {
     const newReview: ReviewEntity = await service.create(movie.id, review);
     expect(newReview).not.toBeNull();
 
-    const storedMovie: MovieEntity = await movieRepository.findOne({ where: {id: movie.id}, relations: ["reviews"]});
+    const storedMovie: MovieEntity = await movieRepository.findOne({ where: { id: movie.id }, relations: ["reviews"] });
     expect(storedMovie).not.toBeNull();
     expect(storedMovie.reviews).toHaveLength(reviewsList.length + 1);
   });
@@ -135,12 +135,12 @@ describe('ReviewService', () => {
   it('update should modify a review', async () => {
     const review: ReviewEntity = reviewsList[0];
     review.text = faker.lorem.sentence();
-    review.score = faker.datatype.number({min: 0, max: 10});
+    review.score = faker.datatype.number({ min: 0, max: 10 });
     review.creator = faker.name.firstName();
 
     const updatedReview: ReviewEntity = await service.update(movie.id, review.id, review);
     expect(updatedReview).not.toBeNull();
-    const storedReview: ReviewEntity = await reviewRepository.findOne({ where: {id: review.id}});
+    const storedReview: ReviewEntity = await reviewRepository.findOne({ where: { id: review.id } });
     expect(storedReview).not.toBeNull();
     expect(storedReview.text).toEqual(review.text);
     expect(storedReview.score).toEqual(review.score);
@@ -157,7 +157,7 @@ describe('ReviewService', () => {
     review = {
       ...review,
       text: faker.lorem.sentence(),
-      score: faker.datatype.number({min: 0, max: 10}),
+      score: faker.datatype.number({ min: 0, max: 10 }),
       creator: faker.name.firstName(),
     };
     await expect(() => service.update(movie.id, "0", review)).rejects.toHaveProperty("message", "The review with the given id was not found");
@@ -166,7 +166,7 @@ describe('ReviewService', () => {
   it('update should throw an exception for a non associated review', async () => {
     const nonAssociatedReview = await reviewRepository.save({
       text: faker.lorem.sentence(),
-      score: faker.datatype.number({min: 0, max: 10}),
+      score: faker.datatype.number({ min: 0, max: 10 }),
       creator: faker.name.firstName(),
     });
 
@@ -176,14 +176,14 @@ describe('ReviewService', () => {
   it('delete should remove a review', async () => {
     const review: ReviewEntity = reviewsList[0];
     await service.delete(movie.id, review.id);
-    const storedReview: ReviewEntity = await reviewRepository.findOne({ where: {id: review.id}});
+    const storedReview: ReviewEntity = await reviewRepository.findOne({ where: { id: review.id } });
     expect(storedReview).toBeNull();
   });
 
   it('delete should remove review from movie', async () => {
     const review: ReviewEntity = reviewsList[0];
     await service.delete(movie.id, review.id);
-    const storedMovie: MovieEntity = await movieRepository.findOne({ where: {id: movie.id}, relations: ["reviews"]});
+    const storedMovie: MovieEntity = await movieRepository.findOne({ where: { id: movie.id }, relations: ["reviews"] });
     expect(storedMovie).not.toBeNull();
     expect(storedMovie.reviews).toHaveLength(reviewsList.length - 1);
   });

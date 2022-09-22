@@ -5,5 +5,5 @@ import MovieEntity from '../movie/movie.entity';
 @Entity()
 export default class DirectorEntity extends PersonEntity {
     @OneToMany(type => MovieEntity, movie => movie.director)
-    movies: MovieEntity[];    
+    movies: MovieEntity[];
 }

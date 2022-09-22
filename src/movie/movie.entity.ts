@@ -39,7 +39,7 @@ export default class MovieEntity extends BaseEntity {
 
     @ManyToMany(type => PlatformEntity, platform => platform.movies)
     platforms: PlatformEntity[];
-    
+
     @OneToMany(type => ReviewEntity, review => review.movie)
     reviews: ReviewEntity[];
 

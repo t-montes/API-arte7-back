@@ -37,18 +37,18 @@ describe('MovieService', () => {
   const seedDatabase = async () => {
     movieRepository.clear();
     moviesList = [];
-    for(let i = 0; i < 5; i++){
-        const movie: MovieEntity = await movieRepository.save({
-          title: faker.name.firstName(),
-          poster: faker.image.imageUrl(),
-          duration: faker.datatype.number(),
-          country: faker.address.country(),
-          releaseDate: faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z'),
-          popularity: faker.datatype.number(),
-        });
-        moviesList.push(movie);
+    for (let i = 0; i < 5; i++) {
+      const movie: MovieEntity = await movieRepository.save({
+        title: faker.name.firstName(),
+        poster: faker.image.imageUrl(),
+        duration: faker.datatype.number(),
+        country: faker.address.country(),
+        releaseDate: faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z'),
+        popularity: faker.datatype.number(),
+      });
+      moviesList.push(movie);
     }
-    
+
     director = await directorRepository.save({
       name: faker.name.firstName(),
       photo: faker.image.imageUrl(),
@@ -90,7 +90,7 @@ describe('MovieService', () => {
     expect(movie.releaseDate).toEqual(storedMovie.releaseDate);
     expect(movie.popularity).toEqual(storedMovie.popularity);
   });
-  
+
   it('findOne should throw an exception for an invalid movie', async () => {
     await expect(service.findOne("0")).rejects.toHaveProperty("message", "The movie with the given id was not found");
   });
@@ -115,7 +115,7 @@ describe('MovieService', () => {
     const newMovie: MovieEntity = await service.create(movie);
     expect(newMovie).not.toBeNull();
 
-    const storedMovie: MovieEntity = await movieRepository.findOne({where: {id: newMovie.id}});
+    const storedMovie: MovieEntity = await movieRepository.findOne({ where: { id: newMovie.id } });
     expect(storedMovie).not.toBeNull();
     expect(storedMovie.title).toEqual(movie.title);
     expect(storedMovie.poster).toEqual(movie.poster);
@@ -136,7 +136,7 @@ describe('MovieService', () => {
 
     const updatedMovie: MovieEntity = await service.update(movie.id, movie);
     expect(updatedMovie).not.toBeNull();
-    const storedMovie: MovieEntity = await movieRepository.findOne({ where: {id: movie.id} });
+    const storedMovie: MovieEntity = await movieRepository.findOne({ where: { id: movie.id } });
     expect(storedMovie).not.toBeNull();
     expect(storedMovie.title).toEqual(movie.title);
     expect(storedMovie.poster).toEqual(movie.poster);
@@ -163,10 +163,10 @@ describe('MovieService', () => {
   it('delete should remove a movie', async () => {
     const movie: MovieEntity = moviesList[0];
     await service.delete(movie.id);
-     const deletedMovie: MovieEntity = await movieRepository.findOne({ where: { id: movie.id } });
+    const deletedMovie: MovieEntity = await movieRepository.findOne({ where: { id: movie.id } });
     expect(deletedMovie).toBeNull();
   });
- 
+
   it('delete should throw an exception for an invalid movie', async () => {
     const movie: MovieEntity = moviesList[0];
     await service.delete(movie.id);

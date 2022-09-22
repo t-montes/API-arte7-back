@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
- import { getRepositoryToken } from '@nestjs/typeorm';
- import { Repository } from 'typeorm';
- import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
- import PlatformEntity from './platform.entity';
- import PlatformService from './platform.service';
- import { faker } from '@faker-js/faker';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
+import PlatformEntity from './platform.entity';
+import PlatformService from './platform.service';
+import { faker } from '@faker-js/faker';
 
 describe('PlatformService', () => {
   let service: PlatformService;
@@ -25,12 +25,12 @@ describe('PlatformService', () => {
   const seedDatabase = async () => {
     repository.clear();
     platformsList = [];
-    for(let i = 0; i < 5; i++){
-        const platform: PlatformEntity = await repository.save({
-          name: faker.name.firstName(),
-          url: faker.internet.url()
-        });
-        platformsList.push(platform);
+    for (let i = 0; i < 5; i++) {
+      const platform: PlatformEntity = await repository.save({
+        name: faker.name.firstName(),
+        url: faker.internet.url()
+      });
+      platformsList.push(platform);
     }
   }
 
@@ -64,7 +64,7 @@ describe('PlatformService', () => {
       movies: []
     };
 
-     const  newPlatform: PlatformEntity = await service.create(platform);
+    const newPlatform: PlatformEntity = await service.create(platform);
     expect(newPlatform).not.toBeNull();
 
     const storedPlatform: PlatformEntity = await service.findOne(newPlatform.id);

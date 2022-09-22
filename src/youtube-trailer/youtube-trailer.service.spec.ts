@@ -29,14 +29,14 @@ describe('YoutubeTrailerService', () => {
   const seedDatabase = async () => {
     youtubeTrailerRepository.clear();
     youtubeTrailersList = [];
-    for(let i = 0; i < 5; i++){
-        const youtubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.save({
-          name: faker.name.firstName(),
-          url: faker.image.imageUrl(),
-          duration: faker.datatype.number(),
-          channel: faker.name.firstName(),
-        });
-        youtubeTrailersList.push(youtubeTrailer);
+    for (let i = 0; i < 5; i++) {
+      const youtubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.save({
+        name: faker.name.firstName(),
+        url: faker.image.imageUrl(),
+        duration: faker.datatype.number(),
+        channel: faker.name.firstName(),
+      });
+      youtubeTrailersList.push(youtubeTrailer);
     }
 
     movie = await movieRepository.save({
@@ -86,7 +86,7 @@ describe('YoutubeTrailerService', () => {
     const newYoutubeTrailer: YoutubeTrailerEntity = await service.create(youtubeTrailer);
     expect(newYoutubeTrailer).not.toBeNull();
 
-    const storedYoutubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.findOne({ where: { id:newYoutubeTrailer.id } });
+    const storedYoutubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.findOne({ where: { id: newYoutubeTrailer.id } });
     expect(storedYoutubeTrailer).not.toBeNull();
     expect(storedYoutubeTrailer.name).toEqual(youtubeTrailer.name);
     expect(storedYoutubeTrailer.url).toEqual(youtubeTrailer.url);
@@ -103,7 +103,7 @@ describe('YoutubeTrailerService', () => {
 
     const updatedYoutubeTrailer: YoutubeTrailerEntity = await service.update(youtubeTrailer.id, youtubeTrailer);
     expect(updatedYoutubeTrailer).not.toBeNull();
-    const storedYoutubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.findOne({ where: { id:youtubeTrailer.id } });
+    const storedYoutubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.findOne({ where: { id: youtubeTrailer.id } });
     expect(storedYoutubeTrailer).not.toBeNull();
     expect(storedYoutubeTrailer.name).toEqual(youtubeTrailer.name);
     expect(storedYoutubeTrailer.url).toEqual(youtubeTrailer.url);
@@ -126,7 +126,7 @@ describe('YoutubeTrailerService', () => {
   it('delete should remove a youtube trailer', async () => {
     const youtubeTrailer: YoutubeTrailerEntity = youtubeTrailersList[0];
     await service.delete(youtubeTrailer.id);
-    const storedYoutubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.findOne({ where: { id:youtubeTrailer.id } });
+    const storedYoutubeTrailer: YoutubeTrailerEntity = await youtubeTrailerRepository.findOne({ where: { id: youtubeTrailer.id } });
     expect(storedYoutubeTrailer).toBeNull();
   });
 

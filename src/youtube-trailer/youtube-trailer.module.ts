@@ -7,4 +7,4 @@ import YoutubeTrailerEntity from './youtube-trailer.entity';
   imports: [TypeOrmModule.forFeature([YoutubeTrailerEntity])],
   providers: [YoutubeTrailerService]
 })
-export class YoutubeTrailerModule {}
+export class YoutubeTrailerModule { }

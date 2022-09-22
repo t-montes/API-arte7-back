@@ -7,4 +7,4 @@ import ActorEntity from './actor.entity';
   imports: [TypeOrmModule.forFeature([ActorEntity])],
   providers: [ActorService]
 })
-export class ActorModule {}
+export class ActorModule { }

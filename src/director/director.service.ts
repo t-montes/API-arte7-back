@@ -9,15 +9,15 @@ export default class DirectorService {
     constructor(
         @InjectRepository(DirectorEntity)
         private readonly directorRepository: Repository<DirectorEntity>,
-    ){}
+    ) { }
 
     async findAll(): Promise<DirectorEntity[]> {
         return await this.directorRepository.find({ relations: ['movies'] });
     }
 
     async findOne(id: string): Promise<DirectorEntity> {
-        const director:DirectorEntity = await this.directorRepository.findOne({ where: {id}, relations: ['movies'] });
-        if (!director) 
+        const director: DirectorEntity = await this.directorRepository.findOne({ where: { id }, relations: ['movies'] });
+        if (!director)
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
         return director;
     }
@@ -27,15 +27,15 @@ export default class DirectorService {
     }
 
     async update(id: string, director: DirectorEntity): Promise<DirectorEntity> {
-        const directorToUpdate:DirectorEntity = await this.directorRepository.findOne({ where: {id} });
-        if (!directorToUpdate) 
+        const directorToUpdate: DirectorEntity = await this.directorRepository.findOne({ where: { id } });
+        if (!directorToUpdate)
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.directorRepository.save({...directorToUpdate, ...director});
+        return await this.directorRepository.save({ ...directorToUpdate, ...director });
     }
-    
+
     async delete(id: string): Promise<void> {
-        const directorToDelete:DirectorEntity = await this.directorRepository.findOne({ where: {id} });
-        if (!directorToDelete) 
+        const directorToDelete: DirectorEntity = await this.directorRepository.findOne({ where: { id } });
+        if (!directorToDelete)
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
         await this.directorRepository.remove(directorToDelete);
     }

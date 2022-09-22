@@ -7,4 +7,4 @@ import GenreEntity from './genre.entity';
   imports: [TypeOrmModule.forFeature([GenreEntity])],
   providers: [GenreService]
 })
-export class GenreModule {}
+export class GenreModule { }

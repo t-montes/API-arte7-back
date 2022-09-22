@@ -9,15 +9,15 @@ export default class PlatformService {
     constructor(
         @InjectRepository(PlatformEntity)
         private readonly platformRepository: Repository<PlatformEntity>,
-    ){}
+    ) { }
 
     async findAll(): Promise<PlatformEntity[]> {
         return await this.platformRepository.find({ relations: ['movies'] });
     }
 
     async findOne(id: string): Promise<PlatformEntity> {
-        const platform:PlatformEntity = await this.platformRepository.findOne({ where: {id}, relations: ['movies'] });
-        if (!platform) 
+        const platform: PlatformEntity = await this.platformRepository.findOne({ where: { id }, relations: ['movies'] });
+        if (!platform)
             throw new BusinessLogicException("The platform with the given id was not found", BusinessError.NOT_FOUND);
         return platform;
     }
@@ -27,15 +27,15 @@ export default class PlatformService {
     }
 
     async update(id: string, platform: PlatformEntity): Promise<PlatformEntity> {
-        const platformToUpdate:PlatformEntity = await this.platformRepository.findOne({ where: {id} });
-        if (!platformToUpdate) 
+        const platformToUpdate: PlatformEntity = await this.platformRepository.findOne({ where: { id } });
+        if (!platformToUpdate)
             throw new BusinessLogicException("The platform with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.platformRepository.save({platformToUpdate, ...platform});
+        return await this.platformRepository.save({ platformToUpdate, ...platform });
     }
-    
+
     async delete(id: string): Promise<void> {
-        const platformToDelete:PlatformEntity = await this.platformRepository.findOne({ where: {id} });
-        if (!platformToDelete) 
+        const platformToDelete: PlatformEntity = await this.platformRepository.findOne({ where: { id } });
+        if (!platformToDelete)
             throw new BusinessLogicException("The platform with the given id was not found", BusinessError.NOT_FOUND);
         await this.platformRepository.remove(platformToDelete);
     }
