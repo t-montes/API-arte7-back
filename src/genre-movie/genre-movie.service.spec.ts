@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import MovieEntity from '../movie/movie.entity';
 import GenreEntity from '../genre/genre.entity';
-import { GenreMovieService } from './genre-movie.service';
+import GenreMovieService from './genre-movie.service';
 import { faker } from '@faker-js/faker';
 
 describe('GenreMovieService', () => {

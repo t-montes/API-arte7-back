@@ -9,7 +9,7 @@ import { PlatformModule } from './platform/platform.module';
 import { ReviewModule } from './review/review.module';
 import { YoutubeTrailerModule } from './youtube-trailer/youtube-trailer.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MovieDirectorModule } from './movie-director/movie-director.module';
+import { DirectorMovieModule } from './director-movie/director-movie.module';
 import { MovieActorModule } from './movie-actor/movie-actor.module';
 import { GenreMovieModule } from './genre-movie/genre-movie.module';
 import { PlatformMovieModule } from './platform-movie/platform-movie.module';
@@ -28,10 +28,10 @@ import { PlatformMovieModule } from './platform-movie/platform-movie.module';
       synchronize: true,
       keepConnectionAlive: true,
     }),
-    MovieDirectorModule,
     MovieActorModule,
     GenreMovieModule,
     PlatformMovieModule,
+    DirectorMovieModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,7 +6,7 @@ import GenreEntity from '../genre/genre.entity';
 import MovieEntity from '../movie/movie.entity';
 
 @Injectable()
-export class GenreMovieService {
+export default class GenreMovieService {
     constructor(
         @InjectRepository(GenreEntity)
         private readonly genreRepository: Repository<GenreEntity>,
