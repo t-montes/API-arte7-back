@@ -125,7 +125,56 @@ describe('MovieService', () => {
     expect(storedMovie.popularity).toEqual(movie.popularity);
   });
 
-  it('update shohuld modify a movie', async () => {
+  it('create should throw an exception for a non associated youtube trailer', async () => {
+    const movie: MovieEntity = {
+      id: "",
+      title: faker.name.firstName(),
+      poster: faker.image.imageUrl(),
+      duration: faker.datatype.number(),
+      country: faker.address.country(),
+      releaseDate: faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z'),
+      popularity: faker.datatype.number(),
+      director,
+      actors: [],
+      genre,
+      platforms: [],
+      reviews: [],
+      youtubeTrailer: null
+    };
+
+    await expect(service.create(movie)).rejects.toHaveProperty("message", "The movie must have a youtube trailer");
+  });
+
+  it('create should throw an exception for an invalid youtube trailer', async () => {
+    const nonSavedYoutubeTrailer: YoutubeTrailerEntity = {
+      id: "",
+      name: faker.name.firstName(), 
+      url: faker.image.imageUrl(),
+      duration: faker.datatype.number(),
+      channel: faker.name.firstName(),
+      movie: null
+    };
+
+    const movie: MovieEntity = {
+      id: "",
+      title: faker.name.firstName(),
+      poster: faker.image.imageUrl(),
+      duration: faker.datatype.number(),
+      country: faker.address.country(),
+      releaseDate: faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z'),
+      popularity: faker.datatype.number(),
+      director,
+      actors: [],
+      genre,
+      platforms: [],
+      reviews: [],
+      youtubeTrailer: nonSavedYoutubeTrailer
+    };
+
+    await expect(service.create(movie)).rejects.toHaveProperty("message", "The youtube trailer with the given id was not found");
+  });
+
+  it('update should modify a movie', async () => {
     const movie: MovieEntity = moviesList[0];
     movie.title = faker.name.firstName();
     movie.poster = faker.image.imageUrl();
@@ -133,6 +182,7 @@ describe('MovieService', () => {
     movie.country = faker.address.country();
     movie.releaseDate = faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z');
     movie.popularity = faker.datatype.number();
+    movie.youtubeTrailer = youtubeTrailer;
 
     const updatedMovie: MovieEntity = await service.update(movie.id, movie);
     expect(updatedMovie).not.toBeNull();
@@ -158,6 +208,41 @@ describe('MovieService', () => {
       popularity: faker.datatype.number()
     };
     await expect(() => service.update("0", movie)).rejects.toHaveProperty("message", "The movie with the given id was not found");
+  });
+
+  it('update should throw an exception for a non associated youtube trailer', async () => {
+    const movie: MovieEntity = moviesList[0];
+    movie.title = faker.name.firstName();
+    movie.poster = faker.image.imageUrl();
+    movie.duration = faker.datatype.number();
+    movie.country = faker.address.country();
+    movie.releaseDate = faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z');
+    movie.popularity = faker.datatype.number();
+    movie.youtubeTrailer = null;
+
+    await expect(service.update(movie.id, movie)).rejects.toHaveProperty("message", "The movie must have a youtube trailer");
+  });
+
+  it('update should throw an exception for an invalid youtube trailer', async () => {
+    const nonSavedYoutubeTrailer: YoutubeTrailerEntity = {
+      id: "",
+      name: faker.name.firstName(),
+      url: faker.image.imageUrl(),
+      duration: faker.datatype.number(),
+      channel: faker.name.firstName(),
+      movie: null
+    };
+
+    const movie: MovieEntity = moviesList[0];
+    movie.title = faker.name.firstName();
+    movie.poster = faker.image.imageUrl();
+    movie.duration = faker.datatype.number();
+    movie.country = faker.address.country();
+    movie.releaseDate = faker.date.between('1900-01-01T00:00:00.000Z', '2000-01-01T00:00:00.000Z');
+    movie.popularity = faker.datatype.number();
+    movie.youtubeTrailer = nonSavedYoutubeTrailer;
+
+    await expect(service.update(movie.id, movie)).rejects.toHaveProperty("message", "The youtube trailer with the given id was not found");
   });
 
   it('delete should remove a movie', async () => {

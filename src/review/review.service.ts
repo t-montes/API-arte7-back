@@ -56,7 +56,7 @@ export default class ReviewService {
         const reviewToUpdate: ReviewEntity = movie.reviews.find(r => r.id === reviewId);
         if (!reviewToUpdate)
             throw new BusinessLogicException("The review with the given id is not associated to the movie", BusinessError.NOT_FOUND);
-        return await this.reviewRepository.save({ reviewToUpdate, ...review });
+        return await this.reviewRepository.save({ ...reviewToUpdate, ...review });
     }
 
     async delete(movieId: string, reviewId: string): Promise<void> {

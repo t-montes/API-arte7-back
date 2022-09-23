@@ -30,7 +30,7 @@ export default class PlatformService {
         const platformToUpdate: PlatformEntity = await this.platformRepository.findOne({ where: { id } });
         if (!platformToUpdate)
             throw new BusinessLogicException("The platform with the given id was not found", BusinessError.NOT_FOUND);
-        return await this.platformRepository.save({ platformToUpdate, ...platform });
+        return await this.platformRepository.save({ ...platformToUpdate, ...platform });
     }
 
     async delete(id: string): Promise<void> {
