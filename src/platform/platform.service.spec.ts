@@ -105,7 +105,6 @@ describe('PlatformService', () => {
 
   it('delete should throw an exception for an invalid platform', async () => {
     const platform: PlatformEntity = platformsList[0];
-    await service.delete(platform.id);
     await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The platform with the given id was not found");
   });
 

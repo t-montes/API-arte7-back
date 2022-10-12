@@ -128,7 +128,6 @@ describe('DirectorService', () => {
 
   it('delete should throw an exception for an invalid director', async () => {
     const director: DirectorEntity = directorsList[0];
-    await service.delete(director.id);
     await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The director with the given id was not found");
   });
 

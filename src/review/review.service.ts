@@ -38,12 +38,8 @@ export default class ReviewService {
         const movie: MovieEntity = await this.movieRepository.findOne({ where: { id: movieId }, relations: ['reviews'] });
         if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
-        movie.reviews = [...movie.reviews, review];
-        const persistedReview: ReviewEntity = await this.reviewRepository.save(review);
-        await this.movieRepository.save(movie);
-        return persistedReview;
-        /*const persistedMovie:MovieEntity = await this.movieRepository.save(movie);
-        return [ ...persistedMovie.reviews ].pop();*/
+        review.movie = movie;
+        return await this.reviewRepository.save(review);
     }
 
     async update(movieId: string, reviewId: string, review: ReviewEntity): Promise<ReviewEntity> {

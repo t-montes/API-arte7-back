@@ -52,7 +52,7 @@ describe('GenreMovieService', () => {
     expect(service).toBeDefined();
   }); 
 
-  it('addMovieToGenre should return a genre with the movie added', async () => {
+  it('addMovieToGenre should return the movie added', async () => {
     const movie: MovieEntity = await movieRepository.save({
       title: faker.name.firstName(),
       poster: faker.image.imageUrl(),
@@ -62,8 +62,10 @@ describe('GenreMovieService', () => {
       popularity: faker.datatype.number(),
     });
 
-    const updatedGenre = await service.addMovieToGenre(genre.id, movie.id);
-    expect(updatedGenre.movies.length).toEqual(moviesList.length + 1);
+    const addedMovie = await service.addMovieToGenre(genre.id, movie.id);
+    expect(addedMovie).not.toBeNull();
+    expect(addedMovie.genre.id).toEqual(genre.id);
+    expect(addedMovie.genre.type).toEqual(genre.type);
   });
 
   it('addMovieToGenre should throw an exception for an invalid genre', async () => {
@@ -136,14 +138,14 @@ describe('GenreMovieService', () => {
       popularity: faker.datatype.number(),
     });
 
-    const updatedGenre = await service.updateMoviesFromGenre(genre.id, [movie]);
-    expect(updatedGenre.movies.length).toEqual(1);
-    expect(updatedGenre.movies[0].title).toEqual(movie.title);
-    expect(updatedGenre.movies[0].poster).toEqual(movie.poster);
-    expect(updatedGenre.movies[0].duration).toEqual(movie.duration);
-    expect(updatedGenre.movies[0].country).toEqual(movie.country);
-    expect(updatedGenre.movies[0].releaseDate).toEqual(movie.releaseDate);
-    expect(updatedGenre.movies[0].popularity).toEqual(movie.popularity);
+    const updatedMovies = await service.updateMoviesFromGenre(genre.id, [movie]);
+    expect(updatedMovies.length).toEqual(1);
+    expect(updatedMovies[0].title).toEqual(movie.title);
+    expect(updatedMovies[0].poster).toEqual(movie.poster);
+    expect(updatedMovies[0].duration).toEqual(movie.duration);
+    expect(updatedMovies[0].country).toEqual(movie.country);
+    expect(updatedMovies[0].releaseDate).toEqual(movie.releaseDate);
+    expect(updatedMovies[0].popularity).toEqual(movie.popularity);
   });
 
   it('updateMoviesFromGenre should throw an exception for an invalid genre', async () => {
@@ -172,7 +174,7 @@ describe('GenreMovieService', () => {
     await expect(service.updateMoviesFromGenre(genre.id, [movie, { id: "0" } as MovieEntity])).rejects.toHaveProperty("message", "The movie with the given id was not found");
   });
 
-  it('deleteMovieFromGenre should delete a movie from a genre', async () => {
+  /*it('deleteMovieFromGenre should delete a movie from a genre', async () => {
     const movie = moviesList[0];
 
     await service.deleteMovieFromGenre(genre.id, movie.id);
@@ -203,6 +205,6 @@ describe('GenreMovieService', () => {
     });
 
     await expect(service.deleteMovieFromGenre(genre.id, movie.id)).rejects.toHaveProperty("message", "The movie with the given id is not associated to the genre");
-  }); 
+  });*/
 
 });

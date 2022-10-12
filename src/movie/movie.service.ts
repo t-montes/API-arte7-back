@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import MovieEntity from './movie.entity';
+import GenreEntity from '../genre/genre.entity';
+import DirectorEntity from '../director/director.entity';
 import YoutubeTrailerEntity from '../youtube-trailer/youtube-trailer.entity';
 
 @Injectable()
@@ -10,6 +12,10 @@ export default class MovieService {
     constructor(
         @InjectRepository(MovieEntity)
         private readonly movieRepository: Repository<MovieEntity>,
+        @InjectRepository(GenreEntity)
+        private readonly genreRepository: Repository<GenreEntity>,
+        @InjectRepository(DirectorEntity)
+        private readonly directorRepository: Repository<DirectorEntity>,
         @InjectRepository(YoutubeTrailerEntity)
         private readonly youtubeTrailerRepository: Repository<YoutubeTrailerEntity>,
     ) { }
@@ -26,13 +32,29 @@ export default class MovieService {
     }
 
     async create(movie: MovieEntity): Promise<MovieEntity> {
+        if (movie.genre == null)
+            throw new BusinessLogicException("The movie must have a genre", BusinessError.PRECONDITION_FAILED);
+        
+        if (movie.director == null)
+            throw new BusinessLogicException("The movie must have a director", BusinessError.PRECONDITION_FAILED);
+        
         if (movie.youtubeTrailer == null)
             throw new BusinessLogicException("The movie must have a youtube trailer", BusinessError.PRECONDITION_FAILED);
+        
+        const genre: GenreEntity = await this.movieRepository.manager.getRepository(GenreEntity).findOne({ where: { id: movie.genre.id } });
+        if (!genre)
+            throw new BusinessLogicException("The genre with the given id was not found", BusinessError.NOT_FOUND);
+
+        const director: DirectorEntity = await this.movieRepository.manager.getRepository(DirectorEntity).findOne({ where: { id: movie.director.id } });
+        if (!director)
+            throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
         
         const youtubeTrailer: YoutubeTrailerEntity = await this.youtubeTrailerRepository.findOne({ where: { id: movie.youtubeTrailer.id } });
         if (!youtubeTrailer)
             throw new BusinessLogicException("The youtube trailer with the given id was not found", BusinessError.NOT_FOUND);
-        
+
+        movie.genre = genre;
+        movie.director = director;
         movie.youtubeTrailer = youtubeTrailer;
         return await this.movieRepository.save(movie);
     }
@@ -42,13 +64,29 @@ export default class MovieService {
         if (!movieToUpdate)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
 
+        if (movie.genre == null)
+            throw new BusinessLogicException("The movie must have a genre", BusinessError.PRECONDITION_FAILED);
+        
+        if (movie.director == null)
+            throw new BusinessLogicException("The movie must have a director", BusinessError.PRECONDITION_FAILED);
+
         if (movie.youtubeTrailer == null)
             throw new BusinessLogicException("The movie must have a youtube trailer", BusinessError.PRECONDITION_FAILED);
+
+        const genre: GenreEntity = await this.movieRepository.manager.getRepository(GenreEntity).findOne({ where: { id: movie.genre.id } });
+        if (!genre)
+            throw new BusinessLogicException("The genre with the given id was not found", BusinessError.NOT_FOUND);
+        
+        const director: DirectorEntity = await this.movieRepository.manager.getRepository(DirectorEntity).findOne({ where: { id: movie.director.id } });
+        if (!director)
+            throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
         
         const youtubeTrailer: YoutubeTrailerEntity = await this.youtubeTrailerRepository.findOne({ where: { id: movie.youtubeTrailer.id } });
         if (!youtubeTrailer)
             throw new BusinessLogicException("The youtube trailer with the given id was not found", BusinessError.NOT_FOUND);
-        
+
+        movieToUpdate.genre = movie.genre;
+        movieToUpdate.director = movie.director;
         movieToUpdate.youtubeTrailer = youtubeTrailer;
         return await this.movieRepository.save({ ...movieToUpdate, ...movie });
     }

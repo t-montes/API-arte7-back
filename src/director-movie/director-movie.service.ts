@@ -14,7 +14,7 @@ export default class DirectorMovieService {
         private readonly movieRepository: Repository<MovieEntity>,
     ) {}
 
-    async addMovieToDirector(directorId: string, movieId: string): Promise<DirectorEntity> {
+    async addMovieToDirector(directorId: string, movieId: string): Promise<MovieEntity> {
         const director: DirectorEntity = await this.directorRepository.findOne({ where: { id: directorId }, relations: ['movies'] });
         if (!director)
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
@@ -22,8 +22,8 @@ export default class DirectorMovieService {
         if (!movie)
             throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
 
-        director.movies = [...director.movies, movie];
-        return await this.directorRepository.save(director);
+        movie.director = director;
+        return await this.movieRepository.save(movie);
     }
 
     async findMoviesFromDirector(directorId: string): Promise<MovieEntity[]> {
@@ -48,7 +48,9 @@ export default class DirectorMovieService {
         return movie;
     }
 
-    async updateMoviesFromDirector(directorId: string, movies: MovieEntity[]): Promise<DirectorEntity> {
+    async updateMoviesFromDirector(directorId: string, movies: MovieEntity[]): Promise<MovieEntity[]> {
+        const updatedMovies: MovieEntity[] = [];
+
         const director: DirectorEntity = await this.directorRepository.findOne({ where: { id: directorId }, relations: ['movies'] });
         if (!director)
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
@@ -57,13 +59,14 @@ export default class DirectorMovieService {
             const persistedMovie: MovieEntity = await this.movieRepository.findOne({ where: { id: movie.id } });
             if (!persistedMovie)
                 throw new BusinessLogicException("The movie with the given id was not found", BusinessError.NOT_FOUND);
+            persistedMovie.director = movie.director;
+            updatedMovies.push(await this.movieRepository.save(persistedMovie));
         }
 
-        director.movies = movies;
-        return await this.directorRepository.save(director);
+        return updatedMovies;
     }
 
-    async deleteMovieFromDirector(directorId: string, movieId: string): Promise<void> {
+    /*async deleteMovieFromDirector(directorId: string, movieId: string): Promise<void> {
         const director: DirectorEntity = await this.directorRepository.findOne({ where: { id: directorId }, relations: ['movies'] });
         if (!director)
             throw new BusinessLogicException("The director with the given id was not found", BusinessError.NOT_FOUND);
@@ -76,5 +79,5 @@ export default class DirectorMovieService {
         
         director.movies.splice(movieIndex, 1);
         await this.directorRepository.save(director);
-    }
+    }*/
 }   

@@ -132,7 +132,6 @@ describe('YoutubeTrailerService', () => {
 
   it('delete should throw an exception for an invalid youtube trailer', async () => {
     const youtubeTrailer: YoutubeTrailerEntity = youtubeTrailersList[0];
-    await service.delete(youtubeTrailer.id);
     await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The youtube trailer with the given id was not found");
   });
 

@@ -190,13 +190,11 @@ describe('ReviewService', () => {
 
   it('delete should throw an exception for an invalid movie', async () => {
     const review: ReviewEntity = reviewsList[0];
-    await service.delete(movie.id, review.id);
     await expect(() => service.delete("0", reviewsList[0].id)).rejects.toHaveProperty("message", "The movie with the given id was not found");
   });
 
   it('delete should throw an exception for an invalid review', async () => {
     const review: ReviewEntity = reviewsList[0];
-    await service.delete(movie.id, review.id);
     await expect(() => service.delete(movie.id, "0")).rejects.toHaveProperty("message", "The review with the given id was not found");
   });
 

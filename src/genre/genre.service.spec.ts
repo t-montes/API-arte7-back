@@ -98,7 +98,6 @@ describe('GenreService', () => {
 
   it('delete should throw an exception for an invalid genre', async () => {
     const genre: GenreEntity = genresList[0];
-    await service.delete(genre.id);
     await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The genre with the given id was not found");
   });
 

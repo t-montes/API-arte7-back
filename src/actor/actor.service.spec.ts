@@ -126,7 +126,6 @@ describe('ActorService', () => {
 
   it('delete should throw an exception for an invalid actor', async () => {
     const actor: ActorEntity = actorsList[0];
-    await service.delete(actor.id);
     await expect(() => service.delete("0")).rejects.toHaveProperty("message", "The actor with the given id was not found");
   });
 
