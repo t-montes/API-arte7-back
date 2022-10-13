@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import PlatformEntity from './platform.entity';
-import PlatformService from './platform.service';
+import { PlatformEntity } from './platform.entity';
+import { PlatformService } from './platform.service';
 import { faker } from '@faker-js/faker';
 
 describe('PlatformService', () => {

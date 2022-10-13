@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import GenreEntity from '../genre/genre.entity';
-import MovieEntity from '../movie/movie.entity';
+import { GenreEntity } from '../genre/genre.entity';
+import { MovieEntity } from '../movie/movie.entity';
 
 @Injectable()
-export default class GenreMovieService {
+export class GenreMovieService {
     constructor(
         @InjectRepository(GenreEntity)
         private readonly genreRepository: Repository<GenreEntity>,

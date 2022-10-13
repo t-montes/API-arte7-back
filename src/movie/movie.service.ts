@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import MovieEntity from './movie.entity';
-import GenreEntity from '../genre/genre.entity';
-import DirectorEntity from '../director/director.entity';
-import YoutubeTrailerEntity from '../youtube-trailer/youtube-trailer.entity';
+import { MovieEntity } from './movie.entity';
+import { GenreEntity } from '../genre/genre.entity';
+import { DirectorEntity } from '../director/director.entity';
+import { YoutubeTrailerEntity } from '../youtube-trailer/youtube-trailer.entity';
 
 @Injectable()
-export default class MovieService {
+export class MovieService {
     constructor(
         @InjectRepository(MovieEntity)
         private readonly movieRepository: Repository<MovieEntity>,

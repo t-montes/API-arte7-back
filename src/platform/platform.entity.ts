@@ -1,9 +1,9 @@
 import { Column, Entity, ManyToMany, JoinTable } from 'typeorm';
-import BaseEntity from '../shared/entities/base.entity';
-import MovieEntity from '../movie/movie.entity';
+import { BaseEntity } from '../shared/entities/base.entity';
+import { MovieEntity } from '../movie/movie.entity';
 
 @Entity()
-export default class PlatformEntity extends BaseEntity {
+export class PlatformEntity extends BaseEntity {
     @Column()
     name: string;
 

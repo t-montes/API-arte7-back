@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import YoutubeTrailerEntity from './youtube-trailer.entity';
-import MovieEntity from '../movie/movie.entity';
-import YoutubeTrailerService from './youtube-trailer.service';
+import { YoutubeTrailerEntity } from './youtube-trailer.entity';
+import { MovieEntity } from '../movie/movie.entity';
+import { YoutubeTrailerService } from './youtube-trailer.service';
 import { faker } from '@faker-js/faker';
 
 describe('YoutubeTrailerService', () => {

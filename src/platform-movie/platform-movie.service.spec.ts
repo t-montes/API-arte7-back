@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import MovieEntity from '../movie/movie.entity';
-import PlatformEntity from '../platform/platform.entity';
-import PlatformMovieService from './platform-movie.service';
+import { MovieEntity } from '../movie/movie.entity';
+import { PlatformEntity } from '../platform/platform.entity';
+import { PlatformMovieService } from './platform-movie.service';
 import { faker } from '@faker-js/faker';
 
 describe('PlatformMovieService', () => {

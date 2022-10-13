@@ -1,9 +1,9 @@
 import { Column, Entity, OneToOne } from 'typeorm';
-import BaseEntity from '../shared/entities/base.entity';
-import MovieEntity from '../movie/movie.entity';
+import { BaseEntity } from '../shared/entities/base.entity';
+import { MovieEntity } from '../movie/movie.entity';
 
 @Entity()
-export default class YoutubeTrailerEntity extends BaseEntity {
+export class YoutubeTrailerEntity extends BaseEntity {
     @Column()
     name: string;
 

@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import DirectorEntity from './director.entity';
+import { DirectorEntity } from './director.entity';
 
 @Injectable()
-export default class DirectorService {
+export class DirectorService {
     constructor(
         @InjectRepository(DirectorEntity)
         private readonly directorRepository: Repository<DirectorEntity>,

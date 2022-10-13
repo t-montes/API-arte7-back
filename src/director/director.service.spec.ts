@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import DirectorEntity from './director.entity';
-import DirectorService from './director.service';
+import { DirectorEntity } from './director.entity';
+import { DirectorService } from './director.service';
 import { faker } from '@faker-js/faker';
 
 describe('DirectorService', () => {

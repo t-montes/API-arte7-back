@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import PlatformEntity from './platform.entity';
+import { PlatformEntity } from './platform.entity';
 
 @Injectable()
-export default class PlatformService {
+export class PlatformService {
     constructor(
         @InjectRepository(PlatformEntity)
         private readonly platformRepository: Repository<PlatformEntity>,

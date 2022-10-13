@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import YoutubeTrailerEntity from './youtube-trailer.entity';
+import { YoutubeTrailerEntity } from './youtube-trailer.entity';
 
 @Injectable()
-export default class YoutubeTrailerService {
+export class YoutubeTrailerService {
     constructor(
         @InjectRepository(YoutubeTrailerEntity)
         private readonly youtubeTrailerRepository: Repository<YoutubeTrailerEntity>,

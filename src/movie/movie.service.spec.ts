@@ -2,11 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import MovieEntity from './movie.entity';
-import GenreEntity from '../genre/genre.entity';
-import DirectorEntity from '../director/director.entity';
-import YoutubeTrailerEntity from '../youtube-trailer/youtube-trailer.entity';
-import MovieService from './movie.service';
+import { MovieEntity } from './movie.entity';
+import { GenreEntity } from '../genre/genre.entity';
+import { DirectorEntity } from '../director/director.entity';
+import { YoutubeTrailerEntity } from '../youtube-trailer/youtube-trailer.entity';
+import { MovieService } from './movie.service';
 import { faker } from '@faker-js/faker';
 
 describe('MovieService', () => {

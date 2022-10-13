@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import GenreEntity from './genre.entity';
-import GenreService from './genre.service';
+import { GenreEntity } from './genre.entity';
+import { GenreService } from './genre.service';
 import { faker } from '@faker-js/faker';
 
 describe('GenreService', () => {

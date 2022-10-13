@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
-import ReviewEntity from './review.entity';
-import MovieEntity from '../movie/movie.entity';
-import ReviewService from './review.service';
+import { ReviewEntity } from './review.entity';
+import { MovieEntity } from '../movie/movie.entity';
+import { ReviewService } from './review.service';
 import { faker } from '@faker-js/faker';
 
 describe('ReviewService', () => {

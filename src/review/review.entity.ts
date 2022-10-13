@@ -1,9 +1,9 @@
 import { Column, Entity, ManyToOne } from 'typeorm';
-import BaseEntity from '../shared/entities/base.entity';
-import MovieEntity from '../movie/movie.entity';
+import { BaseEntity } from '../shared/entities/base.entity';
+import { MovieEntity } from '../movie/movie.entity';
 
 @Entity()
-export default class ReviewEntity extends BaseEntity {
+export class ReviewEntity extends BaseEntity {
     @Column()
     text: string;
 

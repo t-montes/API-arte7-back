@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import GenreEntity from './genre.entity';
+import { GenreEntity } from './genre.entity';
 
 @Injectable()
-export default class GenreService {
+export class GenreService {
     constructor(
         @InjectRepository(GenreEntity)
         private readonly genreRepository: Repository<GenreEntity>,

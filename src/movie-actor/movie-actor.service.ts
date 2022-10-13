@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import MovieEntity from '../movie/movie.entity';
-import ActorEntity from '../actor/actor.entity';
+import { MovieEntity } from '../movie/movie.entity';
+import { ActorEntity } from '../actor/actor.entity';
 
 @Injectable()
-export default class MovieActorService {
+export class MovieActorService {
     constructor(
         @InjectRepository(MovieEntity)
         private readonly movieRepository: Repository<MovieEntity>,

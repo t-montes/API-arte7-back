@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import ReviewEntity from './review.entity';
-import MovieEntity from '../movie/movie.entity';
+import { ReviewEntity } from './review.entity';
+import { MovieEntity } from '../movie/movie.entity';
 
 @Injectable()
-export default class ReviewService {
+export class ReviewService {
     constructor(
         @InjectRepository(ReviewEntity)
         private readonly reviewRepository: Repository<ReviewEntity>,
